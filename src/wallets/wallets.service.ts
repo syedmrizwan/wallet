@@ -1,27 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
 import { Wallet } from './entities/wallet.entity';
+import { WalletTransactionRepository } from './repositories/wallet-transaction.repository';
+import { WalletRepository } from './repositories/wallet.repository';
 
 @Injectable()
 export class WalletsService {
   constructor(
-    @InjectRepository(Wallet)
-    private readonly walletsRepository: Repository<Wallet>,
+    private readonly walletRepository: WalletRepository,
+    private readonly walletTransactionRepository: WalletTransactionRepository,
   ) {}
 
   create(wallet: CreateWalletDto): Promise<Wallet> {
-    return this.walletsRepository.save({ ...wallet });
+    return this.walletRepository.save({ ...wallet });
   }
 
   findAll(): Promise<Wallet[]> {
-    return this.walletsRepository.find();
+    return this.walletRepository.find({ relations: ['walletTransactions'] });
   }
 
   findOne(id: number): Promise<Wallet> {
-    return this.walletsRepository.findOne(id);
+    return this.walletRepository.findOne(id);
   }
 
   update(id: number, updateWalletDto: UpdateWalletDto) {
@@ -29,6 +29,6 @@ export class WalletsService {
   }
 
   async remove(id: number): Promise<void> {
-    await this.walletsRepository.delete(id);
+    await this.walletRepository.delete(id);
   }
 }

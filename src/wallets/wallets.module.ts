@@ -1,11 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { WalletsService } from './wallets.service';
+import { WalletTransactionRepository } from './repositories/wallet-transaction.repository';
+import { WalletRepository } from './repositories/wallet.repository';
 import { WalletsController } from './wallets.controller';
-import { Wallet } from './entities/wallet.entity';
+import { WalletsService } from './wallets.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Wallet])],
+  imports: [
+    TypeOrmModule.forFeature([WalletRepository, WalletTransactionRepository]),
+  ],
   controllers: [WalletsController],
   providers: [WalletsService],
 })

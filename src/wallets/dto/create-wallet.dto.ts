@@ -4,7 +4,7 @@ import { IsNotEmpty } from 'class-validator';
 export class CreateWalletDto {
   @Expose()
   @IsNotEmpty()
-  retailerId: number;
+  userId: number;
 
   @Expose()
   @IsNotEmpty()
