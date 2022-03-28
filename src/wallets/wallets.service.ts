@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
 import { Wallet } from './entities/wallet.entity';
-import { WalletTransactionRepository } from './repositories/wallet-transaction.repository';
-import { WalletRepository } from './repositories/wallet.repository';
 
 @Injectable()
 export class WalletsService {
   constructor(
-    private readonly walletRepository: WalletRepository,
-    private readonly walletTransactionRepository: WalletTransactionRepository,
+    @InjectRepository(Wallet)
+    private walletRepository: Repository<Wallet>,
   ) {}
 
   create(wallet: CreateWalletDto): Promise<Wallet> {

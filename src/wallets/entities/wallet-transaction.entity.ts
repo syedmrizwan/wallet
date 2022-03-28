@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { TransactionType, WalletBucket } from 'src/shared/enums/wallet.enum';
+import { TransactionType, WalletBucket } from '../../shared/enums/wallet.enum';
 import { Wallet } from './wallet.entity';
 
 @Entity()
